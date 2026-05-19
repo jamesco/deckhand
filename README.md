@@ -31,16 +31,67 @@ Open the editor, add slides, hit **Present** when ready. Press `F` in the presen
 
 Edit slides directly in the browser. Export as `slides.json` when done, drop it in `public/`, and deploy anywhere that serves static files.
 
-### Add a new component slide
-
-1. Create `MyComponent.jsx` in the project root — it receives a `slide` prop
-2. Lazy-import it in `src/SlideRenderer.jsx` and add it to `COMPONENTS`
-3. Add `"MyComponent"` to `COMPONENT_NAMES` in `src/slidesStore.js`
-4. Optionally add a custom editor UI in `src/App.jsx` under the `type === "component"` block
-
 ### Change the theme
 
 All colours are CSS custom properties in `src/index.css`. Light and dark themes are both defined there.
+
+## Components
+
+The **Component** slide type is a hook for dropping custom React components into your presentation. `Marquee.jsx` ships as a working example — scrolling text rows with a live editor UI — but it's just one possibility. Anything you can build in React can become a slide: a live chart, a code playground, an animated diagram, a countdown timer.
+
+### Adding a component manually
+
+Four touch points, all small:
+
+1. **Create your component** — add `MyComponent.jsx` to the project root. It receives a `slide` prop, so you can store any configuration you need directly on the slide object.
+
+```jsx
+// MyComponent.jsx
+export default function MyComponent({ slide }) {
+  return (
+    <div style={{ width: "100%", height: "100%", background: "#000", color: "#fff" }}>
+      {slide.message || "Hello"}
+    </div>
+  );
+}
+```
+
+2. **Register it in the renderer** — open `src/SlideRenderer.jsx` and add a lazy import alongside the existing one, then add it to the `COMPONENTS` map:
+
+```js
+const MyComponent = lazy(() => import("../MyComponent.jsx"));
+const COMPONENTS = { Marquee, MyComponent };
+```
+
+3. **Add the name to the store** — open `src/slidesStore.js` and add `"MyComponent"` to `COMPONENT_NAMES`. If your component needs default slide data, update `makeSlide` too:
+
+```js
+export const COMPONENT_NAMES = ["Marquee", "MyComponent"];
+
+// in makeSlide:
+if (type === "component") return { ...base, component: "Marquee", rows: DEFAULT_ROWS };
+// → update the default component name and add any fields your component needs
+```
+
+4. **Optionally add an editor UI** — open `src/App.jsx` and find the `type === "component"` section. Add a block for your component next to the existing `MarqueeEditor`:
+
+```jsx
+{slide.component === "MyComponent" && (
+  <MyComponentEditor slide={slide} onChange={onChange} />
+)}
+```
+
+The editor UI is optional — your component can hardcode its content, read from `slide` fields you set manually via Export/Import JSON, or anything else.
+
+### Adding a component with Claude Code or Codex
+
+If you have Claude Code installed, you can describe what you want and let it handle the wiring:
+
+```
+add a new component slide called Countdown that shows a large number counting down from slide.startValue. wire it up in the renderer, store, and add an editor field for startValue.
+```
+
+The codebase is intentionally small and consistent — AI tools navigate it well. The four files that need touching (`MyComponent.jsx`, `SlideRenderer.jsx`, `slidesStore.js`, `App.jsx`) follow clear patterns, so generated code tends to fit without much correction.
 
 ## Marquee rows
 
@@ -67,6 +118,16 @@ Each row in a Marquee slide is an object:
 | `color` | Any CSS color string |
 
 Edit rows live in the editor — no code changes needed.
+
+## Customizing
+
+### Change the content
+
+Edit slides directly in the browser. Export as `slides.json` when done, drop it in `public/`, and deploy anywhere that serves static files.
+
+### Change the theme
+
+All colours are CSS custom properties in `src/index.css`. Light and dark themes are both defined there.
 
 ## Keyboard shortcuts
 
