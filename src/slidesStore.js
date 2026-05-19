@@ -73,7 +73,7 @@ export function importSlidesFromFile(onLoaded) {
 
 export function makeSlide(type) {
   const id = Date.now().toString(36) + Math.random().toString(36).slice(2, 5);
-  const base = { id, act: 1, type, notes: "" };
+  const base = { id, type, notes: "" };
   if (type === "image")     return { ...base, src: "" };
   if (type === "collage")   return { ...base, bgColor: "#000000", cols: 3, rows: 2, images: [
     { src: "", col: 1, row: 1, colSpan: 1, rowSpan: 1, fit: false },

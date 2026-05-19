@@ -94,19 +94,11 @@ export default function PresenterView() {
     setSubIndex(null);
   }
 
-  const actGroups = slides.reduce((acc, s, i) => {
-    const a = s.act || 1;
-    if (!acc[a]) acc[a] = [];
-    acc[a].push({ slide: s, index: i });
-    return acc;
-  }, {});
-
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100vh", background: "#111", color: "#e8e8e8", fontFamily: "system-ui, sans-serif" }}>
       <div style={{ display: "flex", alignItems: "center", gap: 20, padding: "10px 20px", borderBottom: "1px solid #222", background: "#0d0d0d", fontSize: 13 }}>
         <div style={{ flex: 1, fontWeight: 600, fontSize: 14 }}>
           {slide ? `Slide ${index + 1} of ${slides.length}` : "No slides"}
-          {slide?.act ? <span style={{ marginLeft: 8, fontSize: 11, color: "#555", fontWeight: 400 }}>Act {slide.act}</span> : null}
         </div>
         <div style={{ color: "#888", fontVariantNumeric: "tabular-nums", fontSize: 16, fontWeight: 500 }}>
           {fmt(elapsed)}
@@ -139,29 +131,24 @@ export default function PresenterView() {
 
           <div style={{ borderTop: "1px solid #1e1e1e", padding: "12px 12px", overflow: "auto", flex: 1 }}>
             <div style={sectionLabel}>ALL SLIDES</div>
-            {Object.entries(actGroups).map(([act, items]) => (
-              <div key={act} style={{ marginBottom: 8 }}>
-                <div style={{ fontSize: 10, color: "#444", letterSpacing: "0.06em", fontWeight: 700, marginBottom: 4 }}>ACT {act}</div>
-                {items.map(({ slide: s, index: i }) => {
-                  const meta = TYPE_META[s.type] || {};
-                  return (
-                    <button key={s.id} onClick={() => navigate(i)} style={{
-                      display: "flex", alignItems: "center", gap: 6, width: "100%",
-                      textAlign: "left", padding: "5px 8px", borderRadius: 5, fontSize: 12,
-                      background: index === i ? "#1e2a3a" : "transparent",
-                      border: `1px solid ${index === i ? "#3b82f644" : "transparent"}`,
-                      color: index === i ? "#60a5fa" : "#888",
-                      cursor: "pointer", marginBottom: 2,
-                    }}>
-                      <span style={{ fontSize: 9, fontWeight: 700, color: meta.color || "#666", minWidth: 24 }}>{meta.short}</span>
-                      <span style={{ flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                        {i + 1}. {s.type}
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
-            ))}
+            {slides.map((s, i) => {
+              const meta = TYPE_META[s.type] || {};
+              return (
+                <button key={s.id} onClick={() => navigate(i)} style={{
+                  display: "flex", alignItems: "center", gap: 6, width: "100%",
+                  textAlign: "left", padding: "5px 8px", borderRadius: 5, fontSize: 12,
+                  background: index === i ? "#1e2a3a" : "transparent",
+                  border: `1px solid ${index === i ? "#3b82f644" : "transparent"}`,
+                  color: index === i ? "#60a5fa" : "#888",
+                  cursor: "pointer", marginBottom: 2,
+                }}>
+                  <span style={{ fontSize: 9, fontWeight: 700, color: meta.color || "#666", minWidth: 24 }}>{meta.short}</span>
+                  <span style={{ flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                    {i + 1}. {s.type}
+                  </span>
+                </button>
+              );
+            })}
           </div>
         </div>
 
@@ -171,6 +158,17 @@ export default function PresenterView() {
             <div style={{ fontSize: 15, lineHeight: 1.75, color: "#ccc", whiteSpace: "pre-wrap", marginTop: 6 }}>
               {slide?.notes || <span style={{ color: "#444", fontStyle: "italic" }}>No notes for this slide</span>}
             </div>
+            {nextSlide && (
+              <>
+                <div style={{ borderTop: "1px solid #222", margin: "16px 0 12px" }} />
+                <div style={{ ...sectionLabel, opacity: 0.5 }}>NEXT SLIDE NOTES</div>
+                <div style={{ fontSize: 13, lineHeight: 1.65, color: "#ccc", opacity: 0.8, whiteSpace: "pre-wrap", fontStyle: "italic" }}>
+                  {nextSlide.notes
+                    ? nextSlide.notes.split(/\n|(?<=[.!?])\s+/)[0]
+                    : <span style={{ color: "#444" }}>No notes</span>}
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>

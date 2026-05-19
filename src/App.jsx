@@ -347,23 +347,6 @@ function ContentPane({ slide, onChange }) {
 
   return (
     <div style={{ flex: 1, padding: "20px 24px", overflow: "auto", display: "flex", flexDirection: "column", gap: 16 }}>
-      {/* Act selector */}
-      <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
-        <label style={labelStyle}>Act</label>
-        {[1, 2, 3, 4].map(a => (
-          <button key={a} onClick={() => set("act", a)} style={{
-            ...ghostBtn,
-            background: slide.act === a ? "var(--color-background-secondary)" : "transparent",
-            border: `0.5px solid ${slide.act === a ? "var(--color-border-secondary)" : "transparent"}`,
-            fontWeight: slide.act === a ? 600 : 400,
-            color: slide.act === a ? "var(--color-text-primary)" : "var(--color-text-tertiary)",
-            padding: "4px 10px",
-          }}>
-            {a}
-          </button>
-        ))}
-      </div>
-
       {type === "image" && (
         <>
           <Field label="Image URL or path">
@@ -580,9 +563,6 @@ function SlideItem({ slide, index, isActive, onClick, onDelete, onDragStart, onD
         <div style={{ fontSize: 12, fontWeight: 500, color: isActive ? "var(--color-text-primary)" : "var(--color-text-secondary)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
           {index + 1}. {label}
         </div>
-        {slide.act && (
-          <div style={{ fontSize: 10, color: "var(--color-text-tertiary)", marginTop: 1 }}>Act {slide.act}</div>
-        )}
       </div>
       <button onClick={(e) => { e.stopPropagation(); onDelete(); }}
         style={{ ...ghostBtn, opacity: 0.4, padding: 3 }} title="Delete slide">
@@ -664,6 +644,7 @@ export default function App() {
       );
     }
     broadcast(slides, Math.max(0, activeIndex));
+    openPresenter();
   }
 
   function openPresenter() {
@@ -790,7 +771,7 @@ export default function App() {
               background: "var(--color-background-secondary)", border: "0.5px solid var(--color-border-tertiary)",
               color: "var(--color-text-secondary)", borderRadius: 8,
             }}>
-              Notes
+              Presenter
             </button>
           </div>
           <div style={{ display: "flex", gap: 5 }}>
