@@ -1,6 +1,6 @@
 # Deckhand
 
-A lightweight, hackable presentation tool built with React + Vite. No accounts, no subscriptions, no cloud — just a local dev server and a JSON file.
+A lightweight, hackable presentation tool built with React + Vite. No accounts, no subscriptions, no cloud; just a local dev server, a JSON file, a hope and a dream.
 
 ## Features
 
@@ -10,7 +10,7 @@ A lightweight, hackable presentation tool built with React + Vite. No accounts, 
 - **Collage slides** — CSS grid layout with configurable rows, columns, and background colour
 - **Video slides** — YouTube and Vimeo embeds with autoplay
 - **iFrame slides** — embed any URL
-- **Colour picker** — native OS colour wheel + hex input + up to 10 saved swatches, shared across all slides
+- **Colour picker** — background colour picker for Image & Collage slides – native OS colour wheel + hex input + up to 10 saved swatches
 - **Presenter view** — separate window with speaker notes, slide timer, and next-slide preview
 - **Export / Import** — slides saved as plain JSON; deploy by dropping `slides.json` in `public/`
 
@@ -37,11 +37,9 @@ All colours are CSS custom properties in `src/index.css`. Light and dark themes 
 
 ## Components
 
-The **Component** slide type is a hook for dropping custom React components into your presentation. `Marquee.jsx` ships as a working example — scrolling text rows with a live editor UI — but it's just one possibility. Anything you can build in React can become a slide: a live chart, a code playground, an animated diagram, a countdown timer.
+The **Component** slide type is a hook for dropping custom React components into your presentation. `Marquee.jsx` ships as a working example: scrolling text rows with a live editor UI, but it's just one possibility. Anything you can build in React can become a slide: a live chart, a code playground, an animated diagram, a countdown timer.
 
 ### Adding a component manually
-
-Four touch points, all small:
 
 1. **Create your component** — add `MyComponent.jsx` to the project root. It receives a `slide` prop, so you can store any configuration you need directly on the slide object.
 
@@ -85,7 +83,7 @@ The editor UI is optional — your component can hardcode its content, read from
 
 ### Adding a component with Claude Code or Codex
 
-If you have Claude Code installed, you can describe what you want and let it handle the wiring:
+If you're using Claude Code or Codex, you can describe what you want and let it handle the wiring:
 
 ```
 add a new component slide called Countdown that shows a large number counting down from slide.startValue. wire it up in the renderer, store, and add an editor field for startValue.
