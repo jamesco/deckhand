@@ -27,9 +27,13 @@ Open the editor, add slides, hit **Present** when ready. Press `F` in the presen
 
 ## Customizing
 
+### Adding images
+
+Images can be linked to from the web, or added to the `/public/slides` folder and linked to from there.
+
 ### Change the content
 
-Edit slides directly in the browser. Export as `slides.json` when done, drop it in `public/`, and deploy anywhere that serves static files.
+Edit slides directly in the browser. Remember to Export JSON when done, as by default the content is only saved to localStorage in the browser. Drop the `slides.json` file in the `public/` folder and you're good to go.
 
 ### Change the theme
 
