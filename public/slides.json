@@ -1,0 +1,40 @@
+[
+  {
+    "id": "starter-001",
+    "act": 1,
+    "type": "component",
+    "component": "Marquee",
+    "notes": "Opening marquee slide. Select this slide and edit the rows in the panel on the right.",
+    "rows": [
+      { "words": ["Your Topic Here", "Welcome", "Get Started", "Dive In"], "size": 80, "weight": 800, "duration": 14, "dir": -1, "color": "#E31E67" },
+      { "words": ["Subtitle text", "More context", "Supporting information"], "size": 28, "weight": 400, "duration": 14, "dir": 1, "color": "rgba(255,255,255,0.3)" },
+      { "words": ["Section Title", "Key Points", "Highlights", "Topics"], "size": 64, "weight": 700, "duration": 18, "dir": -1, "color": "#7e25ff" },
+      { "words": ["Additional context", "Background information", "Details"], "size": 24, "weight": 400, "duration": 18, "dir": 1, "color": "rgba(255,255,255,0.22)" },
+      { "words": ["TAG1", "TAG2", "TAG3", "TAG4", "TAG5", "TAG6"], "size": 56, "weight": 700, "duration": 12, "dir": -1, "color": "#00BAC8" }
+    ]
+  },
+  {
+    "id": "starter-002",
+    "act": 1,
+    "type": "image",
+    "src": "",
+    "bgColor": "#1E3869",
+    "fit": true,
+    "naturalSize": false,
+    "notes": "Replace this with your image. Set the src to a URL or a path in public/ (e.g. /slides/my-photo.jpg)."
+  },
+  {
+    "id": "starter-003",
+    "act": 2,
+    "type": "collage",
+    "bgColor": "#111111",
+    "cols": 2,
+    "rows": 2,
+    "images": [
+      { "src": "", "col": 1, "row": 1, "colSpan": 1, "rowSpan": 1, "fit": false },
+      { "src": "", "col": 2, "row": 1, "colSpan": 1, "rowSpan": 1, "fit": false },
+      { "src": "", "col": 1, "row": 2, "colSpan": 2, "rowSpan": 1, "fit": false }
+    ],
+    "notes": "A 2x2 grid with a full-width bottom image. Add image URLs or paths, then adjust the grid layout."
+  }
+]
